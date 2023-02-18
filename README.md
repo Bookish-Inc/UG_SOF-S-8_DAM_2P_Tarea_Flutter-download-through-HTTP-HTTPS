@@ -1,3 +1,6 @@
 # http_flutter
 
-A new Flutter project.
+Noticias del Comercio mostradas dinámicamente con RSS Feed.
+Dependencias:
+webfeed
+http
