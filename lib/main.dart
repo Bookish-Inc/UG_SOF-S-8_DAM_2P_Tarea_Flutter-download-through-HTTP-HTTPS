@@ -103,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   if (index == 1) {
                     return _bigItem();
                   }
-                  return _item(snapshot.data.item[index - 2]);
+                  return _item(snapshot.data.items[index - 2]);
                 }),
           );
         });
@@ -119,7 +119,8 @@ class _MyHomePageState extends State<MyHomePage> {
           height: (screenWidth - 64.0) * 3.0 / 5.0,
           decoration: BoxDecoration(
             image: const DecorationImage(
-              image: AssetImage(''),
+              image: NetworkImage(
+                  'https://www.elcomercio.com/wp-content/uploads/2021/06/logo-el-comercio.jpg'),
             ),
             borderRadius: BorderRadius.circular(30.0),
           ),
@@ -138,32 +139,38 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _item(RssItem item) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: IntrinsicHeight(
-        child: Row(children: <Widget>[
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  item.categories.first.value,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Text(item.title),
-                Text(item.dc.creator),
-              ],
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 9.0),
+      color: Colors.grey.shade100,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
+      elevation: 3,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: IntrinsicHeight(
+          child: Row(children: <Widget>[
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    item.categories!.first.value,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(item.title!),
+                  Text(item.dc!.creator!),
+                ],
+              ),
             ),
-          ),
-          Container(
-            width: 120.0,
-            height: 120.0,
-            child: Image(
-              image: AssetImage(''),
-              fit: BoxFit.cover,
-            ),
-          )
-        ]),
+            Container(
+              width: 120.0,
+              height: 120.0,
+              child: Image(
+                image: NetworkImage(item.enclosure!.url!),
+                fit: BoxFit.cover,
+              ),
+            )
+          ]),
+        ),
       ),
     );
   }
